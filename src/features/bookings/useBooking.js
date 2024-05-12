@@ -10,7 +10,7 @@ export function useBooking() {
     data: booking,
     error,
   } = useQuery({
-    queryKey: ["Booking"],
+    queryKey: ["Booking", bookingId],
     // responsible for fetching the data from api
     queryFn: () => getBooking(bookingId),
     // react query try to re-fetch data 3 time if it fails-> to disable it
