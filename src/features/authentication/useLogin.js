@@ -1,9 +1,11 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { login as loginApi } from "../../services/apiAuth";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export function useLogin() {
+  const queryClient = useQueryClient();
+
   const navigate = useNavigate();
 
   const { mutate: login, isLoading } = useMutation({
@@ -13,7 +15,11 @@ export function useLogin() {
         password,
       }),
     onSuccess: (user) => {
-      navigate("/dashboard");
+      console.log(user);
+
+      // this allow to set data manually to react query cached
+      queryClient.setQueryData(["user"], user.user);
+      navigate("/dashboard", { replace: true });
     },
 
     onError: (err) => {
