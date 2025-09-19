@@ -5,6 +5,7 @@ import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 
 import { useUpdateUser } from "./useUpdateUser";
+import toast from "react-hot-toast";
 
 function UpdatePasswordForm() {
   const { register, handleSubmit, formState, getValues, reset } = useForm();
@@ -17,7 +18,15 @@ function UpdatePasswordForm() {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    // <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={(e) => {
+      e.preventDefault(); // stop form submission
+      toast("Password update is disabled by admin", {
+        icon: '😈',
+      });
+    }}>
+
+
       <FormRow
         label="New Password (min 8 chars)"
         error={errors?.password?.message}

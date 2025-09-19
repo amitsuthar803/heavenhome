@@ -8,6 +8,7 @@ import Input from "../../ui/Input";
 
 import { useUser } from "./useUser";
 import { useUpdateUser } from "./useUpdateUser";
+import toast from "react-hot-toast";
 
 function UpdateUserDataForm() {
   // We don't need the loading state, and can immediately use the user data, because we know that it has already been loaded at this point
@@ -43,7 +44,14 @@ function UpdateUserDataForm() {
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    // <Form onSubmit={handleSubmit}>
+    <Form onSubmit={(e) => {
+      e.preventDefault(); // stop form submission
+      toast("Full name update is disabled by admin", {
+        icon: '😈',
+      });
+
+    }}>
       <FormRow label="Email address">
         <Input value={email} disabled />
       </FormRow>
@@ -76,7 +84,7 @@ function UpdateUserDataForm() {
         >
           Cancel
         </Button>
-        <Button disabled={isUpdating}>Update account</Button>
+        <Button disabled={isUpdating}  >Update account</Button>
       </FormRow>
     </Form>
   );
